@@ -4,8 +4,10 @@ import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
 import { describe, expect, it } from 'vitest';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const PAGES = ['index.html', 'privacy.html', 'license.html'];
+const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
+// The folder that is published: nothing outside it is served.
+const ROOT = join(REPO, 'public');
+const PAGES = ['index.html', 'privacy.html', 'license.html', '404.html'];
 
 function load(page) {
   return new JSDOM(readFileSync(join(ROOT, page), 'utf8')).window.document;
@@ -45,8 +47,8 @@ describe.each(PAGES)('%s', (page) => {
     ];
     for (const value of values) {
       if (isExternal(value) || value.startsWith('#')) continue;
-      const file = value.split('#')[0] || 'index.html';
-      const target = file === './' ? 'index.html' : file;
+      const file = (value.split('#')[0] || 'index.html').replace(/^\//, '');
+      const target = file === './' || file === '' ? 'index.html' : file;
       expect(existsSync(join(ROOT, target)), `${page}: ${value}`).toBe(true);
     }
   });
@@ -85,7 +87,7 @@ describe.each(PAGES)('%s', (page) => {
 
 describe('license and privacy pages', () => {
   it('shows the same text as LICENSE on the license page', () => {
-    const license = readFileSync(join(ROOT, 'LICENSE'), 'utf8').trim();
+    const license = readFileSync(join(REPO, 'LICENSE'), 'utf8').trim();
     const shown = load('license.html').querySelector('.legal pre')?.textContent?.trim();
     expect(shown).toBe(license);
     expect(license).toContain('MIT License');
@@ -108,19 +110,46 @@ describe('license and privacy pages', () => {
 });
 
 describe('site files', () => {
-  it('has a strict Content Security Policy and the images the pages use', () => {
+  it('has a strict Content Security Policy that allows only the site itself', () => {
     const headers = readFileSync(join(ROOT, '_headers'), 'utf8');
     expect(headers).toContain("default-src 'none'");
     expect(headers).toContain("style-src 'self'");
+    expect(headers).toContain("font-src 'self'");
     expect(headers).not.toContain('unsafe-inline');
+    expect(headers).not.toContain('unsafe-eval');
+    expect(headers).toContain('Strict-Transport-Security');
+  });
+
+  it('ships the images the pages use', () => {
     expect(readdirSync(join(ROOT, 'assets')).filter((name) => name.endsWith('.webp')).length).toBeGreaterThanOrEqual(12);
   });
 
-  it('keeps the colors as tokens in :root, light and dark', () => {
+  it('keeps the design of bereg.dev: dark Engineering Blueprint tokens and IBM Plex in :root', () => {
     const css = readFileSync(join(ROOT, 'style.css'), 'utf8');
-    expect(css).toContain(':root');
-    expect(css).toContain('prefers-color-scheme: dark');
+    for (const token of ['--bg: #0a1220', '--surface: #0d1829', '--text: #dbe6f5', '--muted: #8ea3bf', '--line: #1f3350', '--accent: #78c2ff', '--amber: #f2b45e']) {
+      expect(css, token).toContain(token);
+    }
+    expect(css).toContain('color-scheme: dark');
+    expect(css).toContain("'IBM Plex Sans'");
+    expect(css).toContain("'IBM Plex Mono'");
     expect(css).toContain('prefers-reduced-motion');
+    expect(css).toContain('forced-colors');
     expect(css).toContain(':focus-visible');
+  });
+
+  it('serves the fonts from the site itself, with the license next to them', () => {
+    const css = readFileSync(join(ROOT, 'style.css'), 'utf8');
+    for (const url of css.matchAll(/url\('([^']+)'\)/g)) {
+      expect(url[1].startsWith('http'), url[1]).toBe(false);
+      expect(existsSync(join(ROOT, url[1])), url[1]).toBe(true);
+    }
+    expect(readFileSync(join(ROOT, 'fonts', 'OFL.txt'), 'utf8')).toContain('SIL OPEN FONT LICENSE');
+  });
+
+  it('publishes only the public folder on Cloudflare', () => {
+    const config = readFileSync(join(REPO, 'wrangler.jsonc'), 'utf8');
+    expect(config).toContain('"directory": "./public"');
+    expect(config).toContain('"not_found_handling": "404-page"');
+    expect(existsSync(join(ROOT, '404.html'))).toBe(true);
   });
 });

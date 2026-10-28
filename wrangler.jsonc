@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers with static assets: serves ./public as it is, there is no build step.
+  // "name" must match the Worker name in the Cloudflare dashboard.
+  "name": "plain-a11y-site",
+  "compatibility_date": "2026-10-14",
+  "assets": {
+    "directory": "./public",
+    // Unknown URLs get public/404.html with a 404 status.
+    "not_found_handling": "404-page"
+  }
+}

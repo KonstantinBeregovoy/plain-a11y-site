@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy policy: Plain A11y</title>
+    <meta name="description" content="Plain A11y collects nothing and sends nothing. All work happens in your browser." />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0a1220" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to the main content</a>
+
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href="./">
+          <img src="assets/icon.svg" alt="" width="36" height="36" />
+          Plain A11y
+        </a>
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#how-it-works">How it works</a></li>
+            <li><a href="index.html#screenshots">Screenshots</a></li>
+            <li><a href="index.html#limits">Limits</a></li>
+            <li><a href="index.html#install">Install</a></li>
+            <li><a href="privacy.html" aria-current="page">Privacy</a></li>
+            <li><a href="license.html">License</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="wrap">
+        <article class="article">
+          <p class="meta">Last updated: 28 October 2026</p>
+          <h1>Plain A11y privacy policy</h1>
+
+          <h2>In short</h2>
+          <p>Plain A11y collects nothing and sends nothing. All work happens in your browser.</p>
+
+          <h2>What happens to data</h2>
+          <ul>
+            <li>
+              <strong>Page content.</strong> When you press “Check page”, the check runs on the current tab
+              right in the browser. The page content and the result of the check are not sent anywhere and
+              are not stored. The result lives only while the popup is open.
+            </li>
+            <li>
+              <strong>Clipboard.</strong> The extension writes the report to the clipboard only when you
+              press “Copy report”. It cannot read the clipboard.
+            </li>
+            <li>
+              <strong>Settings.</strong> Only two choices are saved: the selected role filter (“All”,
+              “Design”, “Content” or “Code”) and whether the “AAA recommendations” block is shown or
+              hidden. They are stored locally in the browser (<code>chrome.storage.local</code>) and never
+              leave your device.
+            </li>
+          </ul>
+
+          <h2>What the extension does not have</h2>
+          <ul>
+            <li>No server, no accounts and no sign-up.</li>
+            <li>No analytics, counters or tracking.</li>
+            <li>No network requests. The check turns off the loading of page resources that axe-core can otherwise do.</li>
+            <li>No remotely loaded code. All code is inside the extension package.</li>
+            <li>Data is not sold, not shared with third parties and not used for advertising.</li>
+          </ul>
+
+          <h2>Permissions</h2>
+          <ul>
+            <li><code>activeTab</code>: access to the current tab only after you click the extension icon.</li>
+            <li><code>scripting</code>: running the check on that tab.</li>
+            <li><code>storage</code>: saving the selected role filter and the choice to show or hide the AAA block.</li>
+          </ul>
+          <p>The extension does not request access to all sites.</p>
+
+          <h2>This website</h2>
+          <p>
+            This website is static. It has no scripts, no cookies, no analytics and no external fonts or
+            images.
+          </p>
+
+          <h2>Questions</h2>
+          <p>You can ask a question or report a problem through the Issues section of the project repository.</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site">
+      <div class="wrap">
+        <p>© 2026 Konstantin Beregovoy · MIT</p>
+        <ul>
+          <li><a href="#main">Back to top</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="license.html">License</a></li>
+          <li><a href="https://bereg.dev">bereg.dev</a></li>
+        </ul>
+        <p class="site-note">Plain A11y is a working title. This site has no scripts, no cookies and no analytics.</p>
+      </div>
+    </footer>
+  </body>
+</html>
