@@ -123,7 +123,7 @@ nav a:hover { color: var(--text); }
 nav a[aria-current='page'] { color: var(--accent); border-bottom-color: var(--accent); }
 
 footer.site { border-top: 1px solid var(--line); padding: var(--s4) 0; color: var(--muted); font-family: var(--mono); font-size: 13px; }
-footer.site .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s2); }
+footer.site .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s2); }
 footer.site ul { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s3); list-style: none; margin: 0; padding: 0; }
 footer.site a { display: inline-block; padding: 8px 0; color: var(--muted); }
 footer.site a:hover { color: var(--text); }

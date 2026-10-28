@@ -28,6 +28,23 @@ describe.each(PAGES)('%s', (page) => {
     expect(doc.getElementById('main')).not.toBeNull();
   });
 
+  it('follows the title pattern and the author tag of bereg.dev', () => {
+    expect(doc.title.endsWith(' | Konstantin Beregovoy'), doc.title).toBe(true);
+    expect(doc.querySelector('meta[name="author"]')?.getAttribute('content')).toBe('Konstantin Beregovoy');
+    expect(doc.querySelector('meta[name="robots"]')).not.toBeNull();
+  });
+
+  it('has the footer of bereg.dev: copyright, LinkedIn and GitHub of the author, and a link to the main site', () => {
+    const footer = doc.querySelector('footer.site');
+    expect(footer?.textContent).toContain('© 2026 Konstantin Beregovoy');
+    const links = Object.fromEntries([...footer.querySelectorAll('a')].map((a) => [a.textContent.trim(), a]));
+    expect(links['LinkedIn']?.getAttribute('href')).toBe('https://www.linkedin.com/in/konstantin-beregovoy/');
+    expect(links['GitHub']?.getAttribute('href')).toBe('https://github.com/KonstantinBeregovoy');
+    expect(links['LinkedIn']?.getAttribute('rel')).toBe('me');
+    expect(links['GitHub']?.getAttribute('rel')).toBe('me');
+    expect(links['bereg.dev']?.getAttribute('href')).toBe('https://bereg.dev');
+  });
+
   it('has exactly one h1 and no skipped heading levels', () => {
     const levels = [...doc.querySelectorAll('h1, h2, h3, h4, h5, h6')].map((h) => Number(h.tagName[1]));
     expect(levels.filter((level) => level === 1)).toHaveLength(1);
