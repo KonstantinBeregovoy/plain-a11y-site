@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plain A11y: accessibility problems explained in plain language</title>
+    <meta
+      name="description"
+      content="A free, open-source Chrome extension that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to the main content</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="./">
+          <img src="assets/icon.svg" alt="" width="32" height="32" />
+          Plain A11y
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How it works</a></li>
+            <li><a href="#screenshots">Screenshots</a></li>
+            <li><a href="#limits">Limits</a></li>
+            <li><a href="#install">Install</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="license.html">License</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="wrap">
+          <div>
+            <h1 id="hero-title">Accessibility problems, explained in plain language</h1>
+            <p>
+              Plain A11y checks the page you have open and tells you what is wrong, who it
+              affects, how to fix it and whether the task is for design, content or code.
+              No WCAG jargon, no selectors, and nothing leaves your browser.
+            </p>
+            <div class="actions">
+              <a class="button" href="#install">Install from source</a>
+              <span class="note">Chrome Web Store: coming soon</span>
+            </div>
+            <ul class="facts">
+              <li>Free</li>
+              <li>Open source (MIT)</li>
+              <li>Built on axe-core</li>
+              <li>No accounts, no tracking</li>
+            </ul>
+          </div>
+          <img
+            src="assets/shot-02-1280.webp"
+            srcset="assets/shot-02-640.webp 640w, assets/shot-02-1280.webp 1280w"
+            sizes="(min-width: 56rem) 36rem, 100vw"
+            width="1280"
+            height="800"
+            alt="The Plain A11y popup next to a coffee shop web page. It lists six problems grouped by severity and by role, starting with “Image has no text description”."
+          />
+        </div>
+      </section>
+
+      <section id="audience" aria-labelledby="audience-title">
+        <div class="wrap">
+          <h2 id="audience-title">Made for the people who are not developers</h2>
+          <p class="lead">
+            Tools such as axe DevTools, WAVE and Lighthouse are excellent, but their reports speak
+            to developers: rule numbers, selectors and technical names. A designer who sees
+            “color-contrast” does not know what to do, or whose task it is. Plain A11y keeps the
+            same trusted engine and changes what you read.
+          </p>
+          <ul class="grid">
+            <li class="card">
+              <span class="tag">Designers</span>
+              <h3>Contrast, size and focus</h3>
+              <p>Which color or size to change, so that text is readable and targets are easy to hit.</p>
+            </li>
+            <li class="card">
+              <span class="tag">Content editors</span>
+              <h3>Alt text, headings and links</h3>
+              <p>Which text to write: image descriptions, heading levels, link wording, captions.</p>
+            </li>
+            <li class="card">
+              <span class="tag">PMs and QA</span>
+              <h3>A list you can hand out</h3>
+              <p>Problems by severity and by owner, as a checklist that goes straight into a ticket.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="features" aria-labelledby="features-title">
+        <div class="wrap">
+          <h2 id="features-title">What you get</h2>
+          <ul class="grid">
+            <li class="card">
+              <h3>Plain language</h3>
+              <p>
+                Every one of the 94 rules it checks has a short explanation: what is wrong, who is
+                affected and how to fix it. No WCAG or ARIA terms.
+              </p>
+            </li>
+            <li class="card">
+              <h3>Sorted by severity</h3>
+              <p>Critical, Serious and Minor, so the biggest problems come first.</p>
+            </li>
+            <li class="card">
+              <h3>Handed to the right role</h3>
+              <p>
+                Each problem says whether it is a job for Design, Content or Code. Filter by role to
+                see only your own tasks. The filter is remembered.
+              </p>
+            </li>
+            <li class="card">
+              <h3>Show it on the page</h3>
+              <p>
+                “Show on page” outlines the element and scrolls to it, also inside open shadow DOM.
+                When you remove the highlight the page is exactly as it was.
+              </p>
+            </li>
+            <li class="card">
+              <h3>A report for your ticket</h3>
+              <p>One click copies a Markdown checklist grouped by role, ready to paste into any tracker.</p>
+            </li>
+            <li class="card">
+              <h3>Unclear cases are not hidden</h3>
+              <p>
+                When the automated check cannot decide, the case goes into “Needs manual review”
+                instead of a false “all clear”. It is not counted as an issue.
+              </p>
+            </li>
+            <li class="card">
+              <h3>Optional AAA recommendations</h3>
+              <p>
+                A few stricter, AAA-level rules appear in a separate block at the bottom. You can hide
+                the block, and the choice is remembered.
+              </p>
+            </li>
+            <li class="card">
+              <h3>Private by design</h3>
+              <p>
+                The check runs locally in your browser. No servers, no accounts, no analytics, no
+                network requests. Only three permissions.
+              </p>
+            </li>
+            <li class="card">
+              <h3>Accessible itself</h3>
+              <p>
+                Full keyboard control, visible focus, enough contrast, large enough targets, a light
+                and a dark theme, and text that scales.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="how-it-works" aria-labelledby="how-title">
+        <div class="wrap">
+          <h2 id="how-title">How it works</h2>
+          <ol class="steps">
+            <li>
+              <h3>Click “Check page”</h3>
+              <p>Open the extension on any page. It asks for access only to the tab you are looking at.</p>
+            </li>
+            <li>
+              <h3>axe-core does the checking</h3>
+              <p>
+                The open-source axe-core engine runs inside the tab. Plain A11y does not invent its
+                own rules.
+              </p>
+            </li>
+            <li>
+              <h3>You read the result</h3>
+              <p>
+                Rule names become plain explanations, grouped by severity and role, with a button to
+                see each problem on the page.
+              </p>
+            </li>
+          </ol>
+          <p class="lead spaced">
+            Under the hood: a Manifest V3 Chrome extension written in TypeScript, with a React popup,
+            built with WXT. The axe-core version is pinned to an exact number, because rules change
+            between versions and the explanations depend on them.
+          </p>
+        </div>
+      </section>
+
+      <section id="screenshots" aria-labelledby="shots-title">
+        <div class="wrap">
+          <h2 id="shots-title">See it in action</h2>
+          <p class="lead">
+            The screenshots show a fictional coffee shop page with deliberate problems. They are real
+            screenshots of the extension, not mock-ups.
+          </p>
+          <div class="gallery">
+            <figure>
+              <img
+                src="assets/shot-03-1280.webp"
+                srcset="assets/shot-03-640.webp 640w, assets/shot-03-1280.webp 1280w"
+                sizes="(min-width: 56rem) 33rem, 100vw"
+                width="1280"
+                height="800"
+                loading="lazy"
+                alt="The popup explains the problem “Image has no text description”: who is affected, how to fix it, and a Show on page button."
+              />
+              <figcaption><strong>Plain explanations.</strong> What is wrong, who it affects, how to fix it.</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="assets/shot-04-1280.webp"
+                srcset="assets/shot-04-640.webp 640w, assets/shot-04-1280.webp 1280w"
+                sizes="(min-width: 56rem) 33rem, 100vw"
+                width="1280"
+                height="800"
+                loading="lazy"
+                alt="The coffee cup image on the page is outlined in red, and in the popup the Show on page button for that problem is pressed."
+              />
+              <figcaption><strong>Show on page.</strong> The element is outlined and the page scrolls to it.</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="assets/shot-05-1280.webp"
+                srcset="assets/shot-05-640.webp 640w, assets/shot-05-1280.webp 1280w"
+                sizes="(min-width: 56rem) 33rem, 100vw"
+                width="1280"
+                height="800"
+                loading="lazy"
+                alt="The role filter is set to Design, and the popup lists only the two design problems: low text contrast and a clickable area that is too small."
+              />
+              <figcaption><strong>Filter by role.</strong> Each person sees only their own tasks.</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="assets/shot-06-1280.webp"
+                srcset="assets/shot-06-640.webp 640w, assets/shot-06-1280.webp 1280w"
+                sizes="(min-width: 56rem) 33rem, 100vw"
+                width="1280"
+                height="800"
+                loading="lazy"
+                alt="A ticket in an issue tracker contains the pasted report: a checklist of problems grouped under Design, Content and Code."
+              />
+              <figcaption><strong>Report for a ticket.</strong> A Markdown checklist grouped by role.</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="assets/shot-07-1280.webp"
+                srcset="assets/shot-07-640.webp 640w, assets/shot-07-1280.webp 1280w"
+                sizes="(min-width: 56rem) 33rem, 100vw"
+                width="1280"
+                height="800"
+                loading="lazy"
+                alt="The popup says No issues found, and the pasted report states that the automated check covers only part of the accessibility requirements."
+              />
+              <figcaption><strong>Honest about its limits.</strong> Even an empty result reminds you to check the rest by hand.</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="assets/shot-08-1280.webp"
+                srcset="assets/shot-08-640.webp 640w, assets/shot-08-1280.webp 1280w"
+                sizes="(min-width: 56rem) 33rem, 100vw"
+                width="1280"
+                height="800"
+                loading="lazy"
+                alt="The popup in its dark theme next to the coffee shop page, with the same list of problems."
+              />
+              <figcaption><strong>Light and dark.</strong> Both themes are checked for contrast.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="limits" aria-labelledby="limits-title">
+        <div class="wrap">
+          <h2 id="limits-title">What it covers, and what it does not</h2>
+          <p class="lead">
+            Automated checking finds only part of the accessibility problems. An empty report does
+            not mean that a page is accessible.
+          </p>
+          <div class="columns">
+            <div>
+              <h3>What it checks</h3>
+              <ul>
+                <li>Every rule that axe-core 4.14 runs by default (90 rules).</li>
+                <li>The minimum clickable size rule from WCAG 2.2 AA (<code>target-size</code>).</li>
+                <li>Three stricter AAA rules, shown separately as optional recommendations.</li>
+                <li>The open page, including open shadow DOM.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>What it cannot judge</h3>
+              <ul>
+                <li>Whether an image description is meaningful.</li>
+                <li>Whether the tab order is logical or a form is easy to understand.</li>
+                <li>The quality of captions, and the real experience with a screen reader.</li>
+                <li>The content of iframes, which is not checked yet.</li>
+              </ul>
+            </div>
+          </div>
+          <p class="spaced">
+            For that you still need a person with a keyboard and a screen reader. Plain A11y gives you
+            a clear, shareable starting point, not a certificate.
+          </p>
+        </div>
+      </section>
+
+      <section id="privacy" aria-labelledby="privacy-title">
+        <div class="wrap">
+          <h2 id="privacy-title">Privacy and permissions</h2>
+          <p class="lead">
+            Plain A11y collects nothing and sends nothing. The page content and the result stay in your
+            browser, and the only saved settings are your role filter and whether the AAA block is shown.
+          </p>
+          <dl class="perm">
+            <div>
+              <dt>activeTab</dt>
+              <dd>Access to the current tab, only after you click the extension icon.</dd>
+            </div>
+            <div>
+              <dt>scripting</dt>
+              <dd>Runs the check, and the element highlight, inside that tab.</dd>
+            </div>
+            <div>
+              <dt>storage</dt>
+              <dd>Remembers your role filter and your AAA block choice locally.</dd>
+            </div>
+          </dl>
+          <p class="spaced">
+            No access to all sites, no remotely loaded code. Read the <a href="privacy.html">full privacy policy</a>.
+          </p>
+        </div>
+      </section>
+
+      <section id="a11y" aria-labelledby="a11y-title">
+        <div class="wrap">
+          <h2 id="a11y-title">An accessibility tool has to be accessible</h2>
+          <p class="lead">
+            Any mistake here would cost more trust than in an ordinary extension, so the interface is
+            checked automatically in every state, in both light and dark themes: empty, loading,
+            results, no issues, error, manual review and the AAA block.
+          </p>
+          <ul>
+            <li>Everything works from the keyboard, with a visible focus outline.</li>
+            <li>Text contrast of at least 4.5:1, and clickable targets of at least 24×24 px.</li>
+            <li>Results are announced to screen readers, and color is never the only carrier of meaning.</li>
+            <li>Text sizes follow your browser settings, and motion respects your system preference.</li>
+          </ul>
+          <p>
+            Testing by a person with NVDA and VoiceOver is part of the release checklist. If you find
+            something that is not accessible, please report it.
+          </p>
+        </div>
+      </section>
+
+      <section id="install" aria-labelledby="install-title">
+        <div class="wrap">
+          <h2 id="install-title">Install</h2>
+          <p class="lead">
+            The Chrome Web Store listing is coming soon. Until then you can install Plain A11y from
+            source in a couple of minutes. You need Node.js and npm.
+          </p>
+          <div class="code" role="region" aria-label="Commands to build the extension" tabindex="0">
+            <pre><code>npm install
+npm run build</code></pre>
+          </div>
+          <ol>
+            <li>Open <code>chrome://extensions</code> and turn on “Developer mode”.</li>
+            <li>Click “Load unpacked” and choose the <code>.output/chrome-mv3</code> folder.</li>
+            <li>Open a page, click the Plain A11y icon and press “Check page”.</li>
+          </ol>
+          <p>To check local files, turn on “Allow access to file URLs” in the extension settings.</p>
+        </div>
+      </section>
+
+      <section id="open-source" aria-labelledby="oss-title">
+        <div class="wrap">
+          <h2 id="oss-title">Open source</h2>
+          <p class="lead">
+            Plain A11y is free and open source under the MIT License, copyright © 2026 Konstantin
+            Beregovoy. Read the <a href="license.html">LICENSE</a>.
+          </p>
+          <p>
+            It bundles <a href="https://github.com/dequelabs/axe-core">axe-core</a> (MPL-2.0) and
+            <a href="https://react.dev">React</a> (MIT). Their notices are on the license page.
+          </p>
+          <!-- Add a link to the GitHub repository here once it is public. -->
+        </div>
+      </section>
+
+      <section id="roadmap" aria-labelledby="roadmap-title">
+        <div class="wrap">
+          <h2 id="roadmap-title">What is next</h2>
+          <p class="lead">Planned, without dates:</p>
+          <ul>
+            <li>Check only a selected block of the page.</li>
+            <li>Compare two checks: what was fixed and what appeared.</li>
+            <li>A manual checklist for what automation cannot check.</li>
+            <li>Checking the content of iframes, and a Firefox version.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="faq" aria-labelledby="faq-title">
+        <div class="wrap">
+          <h2 id="faq-title">Questions</h2>
+          <details>
+            <summary>Is it free?</summary>
+            <p>Yes. There is no paid version and no account.</p>
+          </details>
+          <details>
+            <summary>Does it send my page to a server?</summary>
+            <p>No. The check runs in your browser, and the extension makes no network requests.</p>
+          </details>
+          <details>
+            <summary>Does it replace an accessibility audit?</summary>
+            <p>
+              No. Automated tools find only part of the problems. Use Plain A11y to find and explain the
+              common ones quickly, and test with people and assistive technology for the rest.
+            </p>
+          </details>
+          <details>
+            <summary>Which browsers and languages?</summary>
+            <p>Chrome today, Firefox is planned. The interface and the explanations are in English for now.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <ul>
+          <li><a href="#main">Back to top</a></li>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="license.html">License (MIT)</a></li>
+        </ul>
+        <p>© 2026 Konstantin Beregovoy. Plain A11y is a working title.</p>
+      </div>
+    </footer>
+  </body>
+</html>

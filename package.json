@@ -1,0 +1,16 @@
+{
+  "name": "plain-a11y-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Static website of the Plain A11y browser extension",
+  "author": "Konstantin Beregovoy",
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "vitest": "^5.0.5"
+  }
+}
