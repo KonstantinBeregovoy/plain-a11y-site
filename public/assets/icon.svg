@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <rect width="128" height="128" rx="28" fill="#0b57d0"/>
-  <circle cx="64" cy="64" r="38" fill="none" stroke="#ffffff" stroke-width="10"/>
-  <path d="M46 65 L59 78 L84 51" fill="none" stroke="#ffffff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Two letters A: the WCAG conformance level AA. Tile #78c2ff and ink #06101d are the accent colors of bereg.dev. -->
+  <rect width="128" height="128" rx="28" fill="#78c2ff"/>
+  <g fill="none" stroke="#06101d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 96 L33 32 L52 96 M22 76 H44"/>
+    <path d="M76 96 L95 32 L114 96 M84 76 H106"/>
+  </g>
 </svg>
