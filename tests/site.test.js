@@ -124,6 +124,11 @@ describe('license and privacy pages', () => {
     }
     expect(text).toContain('collects nothing and sends nothing');
   });
+
+  it('gives a contact address in the privacy policy', () => {
+    const mail = load('privacy.html').querySelector('a[href^="mailto:"]');
+    expect(mail?.getAttribute('href')).toBe('mailto:contact@bereg.dev');
+  });
 });
 
 describe('site files', () => {
