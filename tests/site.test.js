@@ -175,3 +175,19 @@ describe('site files', () => {
     expect(existsSync(join(ROOT, '404.html'))).toBe(true);
   });
 });
+
+describe('install section', () => {
+  const doc = load('index.html');
+
+  it('tells how to get the source: a clone command and a link to the public repository', () => {
+    const code = doc.querySelector('#install pre code')?.textContent ?? '';
+    expect(code).toContain('git clone https://github.com/KonstantinBeregovoy/plain-a11y.git');
+    expect(code.indexOf('git clone')).toBeLessThan(code.indexOf('npm install'));
+    const hrefs = [...doc.querySelectorAll('a')].map((a) => a.getAttribute('href'));
+    expect(hrefs).toContain('https://github.com/KonstantinBeregovoy/plain-a11y');
+  });
+
+  it('has no leftover placeholder comments', () => {
+    expect(readFileSync(join(ROOT, 'index.html'), 'utf8')).not.toMatch(/<!--[^>]*(Add|TODO|once it is public)/i);
+  });
+});
