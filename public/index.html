@@ -9,8 +9,97 @@
     <meta name="robots" content="index, follow" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0a1220" />
+    <link rel="canonical" href="https://a11y-ext.bereg.dev/" />
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Plain A11y" />
+    <meta property="og:title" content="Plain A11y: accessibility in plain language | Konstantin Beregovoy" />
+    <meta property="og:description" content="A free, open-source Chrome extension that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it." />
+    <meta property="og:url" content="https://a11y-ext.bereg.dev/" />
+    <meta property="og:image" content="https://a11y-ext.bereg.dev/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Plain A11y popup next to a coffee shop web page, listing six accessibility problems grouped by severity and by role." />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="style.css" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://a11y-ext.bereg.dev/#app",
+          "name": "Plain A11y",
+          "description": "A free, open-source Chrome extension that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it.",
+          "url": "https://a11y-ext.bereg.dev/",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Chrome",
+          "browserRequirements": "Requires Google Chrome with Manifest V3 support",
+          "inLanguage": "en",
+          "isAccessibleForFree": true,
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "license": "https://opensource.org/licenses/MIT",
+          "image": "https://a11y-ext.bereg.dev/assets/og.png",
+          "author": {
+            "@id": "https://a11y-ext.bereg.dev/#author"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://a11y-ext.bereg.dev/#author",
+          "name": "Konstantin Beregovoy",
+          "url": "https://bereg.dev",
+          "sameAs": [
+            "https://github.com/KonstantinBeregovoy",
+            "https://www.linkedin.com/in/konstantin-beregovoy/"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is it free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. There is no paid version and no account."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it send my page to a server?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The check runs in your browser, and the extension makes no network requests."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it replace an accessibility audit?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Automated tools find only part of the problems. Use Plain A11y to find and explain the common ones quickly, and test with people and assistive technology for the rest."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which browsers and languages?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Chrome today, Firefox is planned. The interface and the explanations are in English for now."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to the main content</a>

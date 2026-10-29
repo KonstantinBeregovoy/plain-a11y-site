@@ -1,0 +1,20 @@
+# Plain A11y
+
+> A free, open-source Chrome extension (MIT) that checks the open page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and which role should handle it (design, content or code). It uses the axe-core engine, runs entirely in the browser, and collects and sends nothing.
+
+Plain A11y is made for designers, content editors, product managers and QA people who are not accessibility specialists. Automated checking finds only part of the accessibility problems: an empty result does not mean a page is accessible, and the extension says so.
+
+## Pages
+
+- [Home](https://a11y-ext.bereg.dev/): what the extension does, how it works, what it covers and what it does not, install steps, questions
+- [Privacy policy](https://a11y-ext.bereg.dev/privacy): the extension collects nothing and sends nothing; the three permissions (activeTab, scripting, storage) and why
+- [License](https://a11y-ext.bereg.dev/license): MIT License and third-party notices (axe-core is MPL-2.0)
+
+## Source
+
+- [Extension repository](https://github.com/KonstantinBeregovoy/plain-a11y): source code, specification, task files for every stage
+- [Website repository](https://github.com/KonstantinBeregovoy/plain-a11y-site): this site
+
+## Author
+
+Konstantin Beregovoy, frontend engineer, https://bereg.dev

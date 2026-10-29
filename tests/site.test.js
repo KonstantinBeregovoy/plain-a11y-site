@@ -89,10 +89,13 @@ describe.each(PAGES)('%s', (page) => {
   });
 
   it('has no scripts, no inline styles and no external resources (the Content Security Policy forbids them)', () => {
-    expect(doc.querySelectorAll('script')).toHaveLength(0);
+    // The only allowed script is a JSON-LD data block: the browser never runs it.
+    const scripts = [...doc.querySelectorAll('script')];
+    expect(scripts.every((script) => script.getAttribute('type') === 'application/ld+json' && !script.hasAttribute('src'))).toBe(true);
     expect(doc.querySelectorAll('style')).toHaveLength(0);
     expect(doc.querySelectorAll('[style]')).toHaveLength(0);
     for (const el of doc.querySelectorAll('link[href], img[src]')) {
+      if (el.getAttribute('rel') === 'canonical') continue;
       expect(isExternal(el.getAttribute('href') ?? el.getAttribute('src') ?? ''), page).toBe(false);
     }
   });
@@ -189,5 +192,103 @@ describe('install section', () => {
 
   it('has no leftover placeholder comments', () => {
     expect(readFileSync(join(ROOT, 'index.html'), 'utf8')).not.toMatch(/<!--[^>]*(Add|TODO|once it is public)/i);
+  });
+});
+
+const SITE = 'https://a11y-ext.bereg.dev';
+const INDEXED = { 'index.html': '/', 'privacy.html': '/privacy', 'license.html': '/license' };
+
+describe.each(Object.entries(INDEXED))('search and sharing data of %s', (page, path) => {
+  const doc = load(page);
+  const meta = (selector) => doc.querySelector(selector)?.getAttribute('content');
+
+  it('has an absolute canonical address that matches the address the site serves', () => {
+    expect(doc.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(SITE + path);
+  });
+
+  it('has Open Graph and Twitter card data that repeats the title, the description and the address', () => {
+    expect(meta('meta[property="og:type"]')).toBe('website');
+    expect(meta('meta[property="og:site_name"]')).toBe('Plain A11y');
+    expect(meta('meta[property="og:title"]')).toBe(doc.title);
+    expect(meta('meta[property="og:description"]')).toBe(meta('meta[name="description"]'));
+    expect(meta('meta[property="og:url"]')).toBe(SITE + path);
+    expect(meta('meta[name="twitter:card"]')).toBe('summary_large_image');
+  });
+
+  it('shares a real 1200x630 image with a text description', () => {
+    expect(meta('meta[property="og:image"]')).toBe(`${SITE}/assets/og.png`);
+    expect(meta('meta[property="og:image:width"]')).toBe('1200');
+    expect(meta('meta[property="og:image:height"]')).toBe('630');
+    expect(meta('meta[property="og:image:alt"]')?.length).toBeGreaterThan(20);
+    const png = readFileSync(join(ROOT, 'assets', 'og.png'));
+    expect(png.subarray(1, 4).toString()).toBe('PNG');
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+  });
+
+  it('points at the favicon and the touch icon, and the files exist', () => {
+    const hrefs = [...doc.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]')].map((l) => l.getAttribute('href'));
+    expect(hrefs).toEqual(expect.arrayContaining(['favicon.ico', 'apple-touch-icon.png']));
+    expect(existsSync(join(ROOT, 'favicon.ico'))).toBe(true);
+    expect(existsSync(join(ROOT, 'apple-touch-icon.png'))).toBe(true);
+  });
+});
+
+describe('structured data of the home page', () => {
+  const doc = load('index.html');
+  const data = JSON.parse(doc.querySelector('script[type="application/ld+json"]')?.textContent ?? 'null');
+  const byType = (type) => data['@graph'].find((item) => item['@type'] === type);
+
+  it('describes the app as free, with the author, without a rating or a store link that does not exist', () => {
+    expect(data['@context']).toBe('https://schema.org');
+    const app = byType('SoftwareApplication');
+    expect(app.name).toBe('Plain A11y');
+    expect(app.offers.price).toBe('0');
+    expect(app.description).toBe(doc.querySelector('meta[name="description"]').getAttribute('content'));
+    expect(byType('Person').name).toBe('Konstantin Beregovoy');
+    expect(JSON.stringify(data)).not.toMatch(/aggregateRating|review|chromewebstore/i);
+  });
+
+  it('repeats the visible questions and answers of the page, word for word', () => {
+    const visible = [...doc.querySelectorAll('#faq details')].map((d) => [
+      d.querySelector('summary').textContent.trim(),
+      d.querySelector('p').textContent.replace(/\s+/g, ' ').trim(),
+    ]);
+    const marked = byType('FAQPage').mainEntity.map((q) => [q.name, q.acceptedAnswer.text]);
+    expect(visible.length).toBeGreaterThan(2);
+    expect(marked).toEqual(visible);
+  });
+});
+
+describe('files for crawlers', () => {
+  it('lists exactly the indexable pages in the sitemap, with their canonical addresses', () => {
+    const xml = readFileSync(join(ROOT, 'sitemap.xml'), 'utf8');
+    const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
+    expect(locs).toEqual(Object.values(INDEXED).map((path) => SITE + path));
+  });
+
+  it('points robots.txt at the sitemap and does not block anything', () => {
+    const robots = readFileSync(join(ROOT, 'robots.txt'), 'utf8');
+    expect(robots).toContain(`Sitemap: ${SITE}/sitemap.xml`);
+    expect(robots).not.toMatch(/Disallow:\s*\//);
+  });
+
+  it('has llms.txt with a summary, the honest limit and links to the real pages', () => {
+    const text = readFileSync(join(ROOT, 'llms.txt'), 'utf8');
+    expect(text.startsWith('# Plain A11y')).toBe(true);
+    expect(text).toContain('does not mean a page is accessible');
+    for (const path of Object.values(INDEXED)) expect(text).toContain(SITE + path);
+  });
+
+  it('has security.txt with a contact and an expiry date that is still ahead', () => {
+    const text = readFileSync(join(ROOT, '.well-known', 'security.txt'), 'utf8');
+    expect(text).toContain('Contact: mailto:contact@bereg.dev');
+    const expires = /^Expires: (.+)$/m.exec(text)?.[1];
+    expect(new Date(expires).getTime()).toBeGreaterThan(Date.now());
+  });
+
+  it('keeps the 404 page out of the index', () => {
+    const doc = load('404.html');
+    expect(doc.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe('noindex, nofollow');
+    expect(doc.querySelector('link[rel="canonical"]')).toBeNull();
   });
 });

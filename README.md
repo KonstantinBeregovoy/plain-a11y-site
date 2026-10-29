@@ -18,7 +18,9 @@ Only the `public/` folder is published. Everything else (tests, README, config) 
 | `public/fonts/` | IBM Plex Sans and Mono (the same files as on bereg.dev) and their license `OFL.txt` |
 | `public/assets/` | Screenshots (WebP in two sizes) and the logo |
 | `public/_headers` | Security headers (a strict Content Security Policy) |
-| `public/robots.txt` | Lets search engines in |
+| `public/robots.txt`, `public/sitemap.xml`, `public/llms.txt` | Lets search engines in, lists the three indexable pages, and gives AI assistants a short summary with links |
+| `public/.well-known/security.txt` | Where to report a security problem. Renew the `Expires` date once a year |
+| `public/favicon.ico`, `public/apple-touch-icon.png`, `public/assets/og.png` | Icons and the 1200×630 sharing image |
 | `wrangler.jsonc` | Cloudflare Workers config: publish `public/`, unknown addresses get `404.html` |
 | `LICENSE` | MIT License of this repository |
 | `tests/` | Checks that keep the site correct (see below) |
