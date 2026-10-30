@@ -179,6 +179,8 @@ describe('site files', () => {
   });
 });
 
+const STORE = 'https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb';
+
 describe('install section', () => {
   const doc = load('index.html');
 
@@ -188,6 +190,26 @@ describe('install section', () => {
     expect(code.indexOf('git clone')).toBeLessThan(code.indexOf('npm install'));
     const hrefs = [...doc.querySelectorAll('a')].map((a) => a.getAttribute('href'));
     expect(hrefs).toContain('https://github.com/KonstantinBeregovoy/plain-a11y');
+  });
+
+  it('sends people to the Chrome Web Store first: the main button and the Install section', () => {
+    const hrefs = [...doc.querySelectorAll('a')].map((a) => a.getAttribute('href'));
+    expect(doc.querySelector('a.btn.primary')?.getAttribute('href')).toBe(STORE);
+    expect(doc.querySelector('a.btn.primary')?.textContent.trim()).toBe('Add to Chrome');
+    expect([...doc.querySelectorAll('#install a')].map((a) => a.getAttribute('href'))).toContain(STORE);
+    expect(hrefs.filter((href) => href === STORE).length).toBeGreaterThanOrEqual(3);
+    expect(doc.querySelector('#build-from-source')?.tagName).toBe('H3');
+    expect(doc.querySelector('a[href="#build-from-source"]')).not.toBeNull();
+  });
+
+  it('says nothing is coming soon any more', () => {
+    expect(readFileSync(join(ROOT, 'index.html'), 'utf8')).not.toMatch(/coming soon/i);
+  });
+
+  it('gives the store address to search engines and to AI assistants', () => {
+    const data = JSON.parse(doc.querySelector('script[type="application/ld+json"]').textContent);
+    expect(data['@graph'].find((item) => item['@type'] === 'SoftwareApplication').installUrl).toBe(STORE);
+    expect(readFileSync(join(ROOT, 'llms.txt'), 'utf8')).toContain(STORE);
   });
 
   it('has no leftover placeholder comments', () => {
@@ -238,14 +260,14 @@ describe('structured data of the home page', () => {
   const data = JSON.parse(doc.querySelector('script[type="application/ld+json"]')?.textContent ?? 'null');
   const byType = (type) => data['@graph'].find((item) => item['@type'] === type);
 
-  it('describes the app as free, with the author, without a rating or a store link that does not exist', () => {
+  it('describes the app as free, with the author, and without a rating or review that does not exist', () => {
     expect(data['@context']).toBe('https://schema.org');
     const app = byType('SoftwareApplication');
     expect(app.name).toBe('Plain A11y');
     expect(app.offers.price).toBe('0');
     expect(app.description).toBe(doc.querySelector('meta[name="description"]').getAttribute('content'));
     expect(byType('Person').name).toBe('Konstantin Beregovoy');
-    expect(JSON.stringify(data)).not.toMatch(/aggregateRating|review|chromewebstore/i);
+    expect(JSON.stringify(data)).not.toMatch(/aggregateRating|review/i);
   });
 
   it('repeats the visible questions and answers of the page, word for word', () => {

@@ -34,6 +34,7 @@
           "name": "Plain A11y",
           "description": "A free, open-source Chrome extension that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it.",
           "url": "https://a11y-ext.bereg.dev/",
+          "installUrl": "https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb",
           "applicationCategory": "DeveloperApplication",
           "operatingSystem": "Chrome",
           "browserRequirements": "Requires Google Chrome with Manifest V3 support",
@@ -136,8 +137,8 @@
               nothing leaves your browser.
             </p>
             <div class="actions">
-              <a class="btn primary" href="#install">Install from source</a>
-              <span class="meta">Chrome Web Store: coming soon</span>
+              <a class="btn primary" href="https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb">Add to Chrome</a>
+              <span class="meta">Free · <a href="#build-from-source">or build it from source</a></span>
             </div>
           </div>
           <img
@@ -410,8 +411,18 @@
         <section class="block" id="install" aria-labelledby="install-title">
           <div class="block-head"><h2 id="install-title">Install</h2></div>
           <p class="lead">
-            The Chrome Web Store listing is coming soon. Until then you can install Plain A11y from source in a
-            couple of minutes. You need Node.js and npm.
+            Install Plain A11y from the <a href="https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb">Chrome Web Store</a>. It is free and needs no account.
+          </p>
+          <ol class="bullets">
+            <li>Open the <a href="https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb">Plain A11y page in the Chrome Web Store</a> and press “Add to Chrome”.</li>
+            <li>Open a page, click the Plain A11y icon and press “Check page”.</li>
+          </ol>
+          <p>To check local files, turn on “Allow access to file URLs” in the extension settings.</p>
+
+          <h3 id="build-from-source">Build from source</h3>
+          <p>
+            If you prefer to read the code and build the extension yourself, it takes a couple of minutes. You need
+            Node.js and npm.
           </p>
           <div class="code" role="region" aria-label="Commands to build the extension" tabindex="0">
             <pre><code>git clone https://github.com/KonstantinBeregovoy/plain-a11y.git
@@ -424,7 +435,6 @@ npm run build</code></pre>
             <li>Click “Load unpacked” and choose the <code>.output/chrome-mv3</code> folder.</li>
             <li>Open a page, click the Plain A11y icon and press “Check page”.</li>
           </ol>
-          <p>To check local files, turn on “Allow access to file URLs” in the extension settings.</p>
         </section>
 
         <section class="block" id="open-source" aria-labelledby="open-source-title">

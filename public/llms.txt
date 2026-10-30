@@ -4,6 +4,10 @@
 
 Plain A11y is made for designers, content editors, product managers and QA people who are not accessibility specialists. Automated checking finds only part of the accessibility problems: an empty result does not mean a page is accessible, and the extension says so.
 
+## Install
+
+- [Chrome Web Store](https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb): add Plain A11y to Chrome (free, no account)
+
 ## Pages
 
 - [Home](https://a11y-ext.bereg.dev/): what the extension does, how it works, what it covers and what it does not, install steps, questions
