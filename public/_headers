@@ -1,10 +1,11 @@
 # Cloudflare (Workers static assets / Pages). Applied to every response from this site.
-# The site has no scripts and no external resources, so the policy is as strict as it gets.
-# Same security headers as bereg.dev, without the analytics allowance.
+# The site itself has no scripts and no external resources. The only exception is Cloudflare Web Analytics,
+# which Cloudflare adds to the pages (a script from static.cloudflareinsights.com that reports to
+# cloudflareinsights.com). Nothing else is allowed.
 
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'none'; script-src https://static.cloudflareinsights.com; connect-src https://cloudflareinsights.com; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
