@@ -40,8 +40,8 @@ describe.each(PAGES)('%s', (page) => {
     const links = Object.fromEntries([...footer.querySelectorAll('a')].map((a) => [a.textContent.trim(), a]));
     expect(links['LinkedIn']?.getAttribute('href')).toBe('https://www.linkedin.com/in/konstantin-beregovoy/');
     expect(links['GitHub']?.getAttribute('href')).toBe('https://github.com/KonstantinBeregovoy');
-    expect(links['LinkedIn']?.getAttribute('rel')).toBe('me');
-    expect(links['GitHub']?.getAttribute('rel')).toBe('me');
+    expect(links['LinkedIn']?.getAttribute('rel')?.split(' ')).toContain('me');
+    expect(links['GitHub']?.getAttribute('rel')?.split(' ')).toContain('me');
     expect(links['bereg.dev']?.getAttribute('href')).toBe('https://bereg.dev');
   });
 
@@ -98,6 +98,20 @@ describe.each(PAGES)('%s', (page) => {
       if (el.getAttribute('rel') === 'canonical') continue;
       expect(isExternal(el.getAttribute('href') ?? el.getAttribute('src') ?? ''), page).toBe(false);
     }
+  });
+
+  it('opens every link to another site in a new tab, without giving the new page a handle on this one', () => {
+    const external = [...doc.querySelectorAll('a[href]')].filter((a) => /^https?:/.test(a.getAttribute('href')));
+    expect(external.length).toBeGreaterThan(0);
+    for (const a of external) {
+      expect(a.getAttribute('target'), a.outerHTML).toBe('_blank');
+      expect(a.getAttribute('rel').split(/\s+/), a.outerHTML).toContain('noopener');
+    }
+  });
+
+  it('keeps links on the same site and in-page anchors in the same tab', () => {
+    const local = [...doc.querySelectorAll('a[href]')].filter((a) => !isExternal(a.getAttribute('href')));
+    for (const a of local) expect(a.hasAttribute('target'), a.outerHTML).toBe(false);
   });
 
   it('keeps the project language English', () => {
