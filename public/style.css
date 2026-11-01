@@ -89,6 +89,9 @@ img { max-width: 100%; height: auto; display: block; }
 
 a { color: var(--accent); text-underline-offset: 3px; }
 a:hover { color: var(--amber); text-decoration-thickness: 2px; }
+/* Links that open a new tab get an arrow; the second declaration gives screen readers a spoken text. */
+a[target="_blank"]::after { content: "\2197"; margin-inline-start: 0.2em; font-size: 0.85em; }
+@supports (content: "a" / "b") { a[target="_blank"]::after { content: "\2197" / " (opens in a new tab)"; } }
 
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 ::selection { background: rgb(var(--accent-rgb) / 0.28); color: #fff; }
