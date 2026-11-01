@@ -182,13 +182,13 @@ describe('site files', () => {
 const STORE = 'https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb';
 
 describe('visit counting is disclosed and the policy allows only that', () => {
-  it('allows only the two Cloudflare Web Analytics addresses on top of the strict policy', () => {
+  it('allows only the Cloudflare Web Analytics script and reports to the site itself, on top of the strict policy', () => {
     const csp = /Content-Security-Policy: (.+)/.exec(readFileSync(join(ROOT, '_headers'), 'utf8'))[1];
     expect(csp).toContain("default-src 'none'");
     expect(csp).toContain('script-src https://static.cloudflareinsights.com;');
-    expect(csp).toContain('connect-src https://cloudflareinsights.com;');
+    expect(csp).toContain("connect-src 'self';");
     expect(csp).not.toMatch(/unsafe-inline|unsafe-eval|\*/);
-    expect(csp.match(/https:\/\/[a-z.]+/g).sort()).toEqual(['https://cloudflareinsights.com', 'https://static.cloudflareinsights.com']);
+    expect(csp.match(/https:\/\/[a-z.]+/g)).toEqual(['https://static.cloudflareinsights.com']);
   });
 
   it('tells the visitor about the counting on every page and in the privacy policy', () => {
