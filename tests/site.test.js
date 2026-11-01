@@ -128,6 +128,13 @@ describe('license and privacy pages', () => {
     expect(text).toContain('collects nothing and sends nothing');
   });
 
+  it('says what happens to the number of issues on the icon, and when the policy was updated', () => {
+    const text = load('privacy.html').body.textContent.replace(/\s+/g, ' ');
+    expect(text).toContain('Number on the icon. After a check, the extension shows the number of issues on its icon for that tab.');
+    expect(text).toContain('The extension does not save it and does not send it anywhere.');
+    expect(text).toContain('Last updated: 1 November 2026');
+  });
+
   it('gives a contact address in the privacy policy', () => {
     const mail = load('privacy.html').querySelector('a[href^="mailto:"]');
     expect(mail?.getAttribute('href')).toBe('mailto:contact@bereg.dev');
