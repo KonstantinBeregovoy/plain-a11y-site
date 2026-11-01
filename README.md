@@ -2,7 +2,7 @@
 
 The static website of Plain A11y, a Chrome extension that checks a page for accessibility problems and explains them in plain language. The extension itself lives in its own repository.
 
-The site has the same look as [bereg.dev](https://bereg.dev) (dark "Engineering Blueprint", IBM Plex), but it is plain HTML and CSS: no framework, no build step, no scripts, no cookies, no analytics and no external resources.
+The site has the same look as [bereg.dev](https://bereg.dev) (dark "Engineering Blueprint", IBM Plex), but it is plain HTML and CSS: no framework, no build step, no scripts of its own, no cookies and no external resources. The one exception is Cloudflare Web Analytics, which Cloudflare adds to the pages to count visits (visits from the EU are not measured). The Content Security Policy allows exactly that and nothing else.
 
 ## Files
 

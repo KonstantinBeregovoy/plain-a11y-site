@@ -181,6 +181,28 @@ describe('site files', () => {
 
 const STORE = 'https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb';
 
+describe('visit counting is disclosed and the policy allows only that', () => {
+  it('allows only the two Cloudflare Web Analytics addresses on top of the strict policy', () => {
+    const csp = /Content-Security-Policy: (.+)/.exec(readFileSync(join(ROOT, '_headers'), 'utf8'))[1];
+    expect(csp).toContain("default-src 'none'");
+    expect(csp).toContain('script-src https://static.cloudflareinsights.com;');
+    expect(csp).toContain('connect-src https://cloudflareinsights.com;');
+    expect(csp).not.toMatch(/unsafe-inline|unsafe-eval|\*/);
+    expect(csp.match(/https:\/\/[a-z.]+/g).sort()).toEqual(['https://cloudflareinsights.com', 'https://static.cloudflareinsights.com']);
+  });
+
+  it('tells the visitor about the counting on every page and in the privacy policy', () => {
+    for (const page of PAGES) {
+      const text = load(page).querySelector('.site-note')?.textContent ?? '';
+      expect(text, page).toContain('Cloudflare Web Analytics');
+      expect(text, page).not.toMatch(/no analytics/i);
+    }
+    const policy = load('privacy.html').body.textContent.replace(/\s+/g, ' ');
+    expect(policy).toContain('counts visits with Cloudflare Web Analytics');
+    expect(policy).toContain('The extension itself collects nothing and sends nothing');
+  });
+});
+
 describe('install section', () => {
   const doc = load('index.html');
 
