@@ -144,9 +144,19 @@ describe('license and privacy pages', () => {
 
   it('says what happens to the number of issues on the icon, and when the policy was updated', () => {
     const text = load('privacy.html').body.textContent.replace(/\s+/g, ' ');
-    expect(text).toContain('Number on the icon. After a check, the extension shows the number of issues on its icon for that tab.');
+    expect(text).toContain('Number on the icon. After a check, the extension shows on its icon for that tab the number of elements with issues');
     expect(text).toContain('The extension does not save it and does not send it anywhere.');
     expect(text).toContain('Last updated: 1 November 2026');
+  });
+
+  it('tells what is kept: the last result of a tab in memory, and the number or mark on the icon', () => {
+    const text = load('privacy.html').querySelector('main')?.textContent?.replace(/\s+/g, ' ') ?? '';
+    expect(text).toContain('Last result of a tab.');
+    expect(text).toContain('chrome.storage.session');
+    expect(text).toMatch(/removed when the tab loads another page, when the tab is closed and when the browser is closed/);
+    expect(text).toContain('Number on the icon.');
+    expect(text).toMatch(/yellow mark/);
+    expect(text).not.toMatch(/are not sent anywhere and\s+are not stored/);
   });
 
   it('gives a contact address in the privacy policy', () => {
