@@ -61,15 +61,23 @@
           <ul>
             <li>
               <strong>Page content.</strong> When you press “Check page”, the check runs on the current tab
-              right in the browser. The page content and the result of the check are not sent anywhere and
-              are not stored. The result lives only while the popup is open, apart from the number of issues on
-              the icon (see the next point).
+              right in the browser. The page content and the result of the check are not sent anywhere. The
+              result is kept only in the memory of the browser, as described in the next two points.
             </li>
             <li>
-              <strong>Number on the icon.</strong> After a check, the extension shows the number of issues on
-              its icon for that tab. The number is kept by the browser for that tab only, until the tab loads
-              another page or is closed. The extension does not save it and does not send it anywhere. For
-              zero issues the icon shows nothing.
+              <strong>Last result of a tab.</strong> After a check, the extension keeps the result for that
+              tab: the list of problems with the selectors of the elements, the page address and the time of
+              the check. This lets you open the window again on the same page and see the result again. It
+              is kept in the memory of the browser (<code>chrome.storage.session</code>) and is never sent
+              anywhere. It is removed when the tab loads another page, when the tab is closed and when the
+              browser is closed.
+            </li>
+            <li>
+              <strong>Number on the icon.</strong> After a check, the extension shows on its icon for that
+              tab the number of elements with issues, or a yellow mark when there are no issues but there are
+              items for a manual review or AAA recommendations. This is kept by the browser for that tab
+              only, until the tab loads another page or is closed. The extension does not save it and does
+              not send it anywhere. When nothing is found, the icon shows nothing.
             </li>
             <li>
               <strong>Clipboard.</strong> The extension writes the report to the clipboard only when you
@@ -96,7 +104,10 @@
           <ul>
             <li><code>activeTab</code>: access to the current tab only after you click the extension icon.</li>
             <li><code>scripting</code>: running the check on that tab.</li>
-            <li><code>storage</code>: saving the selected role filter and the choice to show or hide the AAA block.</li>
+            <li>
+              <code>storage</code>: saving the selected role filter and the choice to show or hide the AAA block, and
+              keeping the last result of a tab in the memory of the browser until the tab loads another page.
+            </li>
           </ul>
           <p>The extension does not request access to all sites.</p>
 
