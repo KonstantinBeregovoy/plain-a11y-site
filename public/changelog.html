@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Changelog: Plain A11y | Konstantin Beregovoy</title>
+    <meta name="description" content="What changed in each version of Plain A11y: what was added and changed, and what it means for privacy." />
+    <meta name="author" content="Konstantin Beregovoy" />
+    <meta name="robots" content="index, follow" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0a1220" />
+    <link rel="canonical" href="https://a11y-ext.bereg.dev/changelog" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Plain A11y" />
+    <meta property="og:title" content="Changelog: Plain A11y | Konstantin Beregovoy" />
+    <meta property="og:description" content="What changed in each version of Plain A11y: what was added and changed, and what it means for privacy." />
+    <meta property="og:url" content="https://a11y-ext.bereg.dev/changelog" />
+    <meta property="og:image" content="https://a11y-ext.bereg.dev/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Plain A11y popup next to a coffee shop web page, listing six accessibility problems grouped by severity and by role." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to the main content</a>
+
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href="./" aria-label="Plain A11y, home">
+          <img src="assets/icon.svg" alt="" width="36" height="36" />
+          Plain A11y
+        </a>
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#how-it-works">How it works</a></li>
+            <li><a href="index.html#screenshots">Screenshots</a></li>
+            <li><a href="index.html#limits">Limits</a></li>
+            <li><a href="index.html#install">Install</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="license.html">License</a></li>
+            <li><a href="changelog.html" aria-current="page">Changelog</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="wrap">
+        <article class="article">
+          <h1>Changelog</h1>
+          <p>
+            What changed in each version of Plain A11y, newest first. A date is the day the version appeared in
+            the Chrome Web Store. The full technical list is in
+            <a href="https://github.com/KonstantinBeregovoy/plain-a11y/blob/main/CHANGELOG.md" rel="noopener" target="_blank">CHANGELOG.md</a>
+            in the repository.
+          </p>
+
+          <h2 id="v0-2-0">Version 0.2.0</h2>
+          <p class="meta">Under review in the Chrome Web Store</p>
+          <h3>Added</h3>
+          <ul>
+            <li>
+              The window shows the result of your last check again when you reopen it on the same page, with
+              the time of the check. Press “Check page” to check again. The result is dropped when the page
+              changes or the tab is closed.
+            </li>
+            <li>
+              The extension icon shows how many elements have issues after a check. When no issues are left
+              but there are items for a manual review or AAA recommendations, it shows a yellow “!”. Nothing
+              is shown when nothing is found.
+            </li>
+          </ul>
+          <h3>Changed</h3>
+          <ul>
+            <li>
+              The summary counts elements and shows issues, manual review and AAA recommendations as three
+              separate groups, for example “Issues found: 8 (5 kinds)”.
+            </li>
+            <li>
+              A link or button whose accessible name differs from its visible text is now listed under “Needs
+              manual review”, because a person has to decide: a link “Notifications” that shows “5” is
+              usually fine.
+            </li>
+          </ul>
+          <h3>Privacy</h3>
+          <ul>
+            <li>
+              The last result of a tab is kept in the memory of the browser until the page changes, the tab is
+              closed or the browser is closed. It is never sent anywhere, and no permission was added. See
+              the <a href="privacy.html">privacy policy</a>.
+            </li>
+          </ul>
+
+          <h2 id="v0-1-0">Version 0.1.0: launch of the base version</h2>
+          <p class="meta"><time datetime="2026-10-30">30 October 2026</time></p>
+          <p>The first public version, with everything needed to check a page and read the result.</p>
+          <h3>Added</h3>
+          <ul>
+            <li>“Check page” runs the axe-core 4.14.0 engine on the current tab.</li>
+            <li>
+              Problems are grouped by severity (critical, serious, minor) and by role (design, content,
+              code), with a role filter that is remembered.
+            </li>
+            <li>
+              A plain-language entry for 94 rules: what is wrong, who is affected, how to fix it. Rules
+              without an entry show the engine text and the role Code.
+            </li>
+            <li>
+              “Show on page” outlines the element and scrolls to it, also inside open shadow DOM. An element
+              with no visible area is shown through its nearest visible parent, or the window says that
+              nothing can be outlined. The page is left exactly as it was.
+            </li>
+            <li>A “Needs manual review” section for cases the engine could not decide, not counted as issues.</li>
+            <li>An “AAA recommendations” block, not counted as issues, which can be hidden.</li>
+            <li>“Copy report” puts a Markdown checklist grouped by role on the clipboard.</li>
+            <li>The minimum clickable size rule from WCAG 2.2 AA (<code>target-size</code>) is turned on.</li>
+          </ul>
+          <h3>Privacy</h3>
+          <ul>
+            <li>
+              Three permissions only: <code>activeTab</code>, <code>scripting</code> and <code>storage</code>.
+              No network requests and no remote code.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site">
+      <div class="wrap">
+        <p>© 2026 Konstantin Beregovoy · MIT</p>
+        <p>
+          <a href="https://www.linkedin.com/in/konstantin-beregovoy/" rel="me noopener" target="_blank">LinkedIn</a> ·
+          <a href="https://github.com/KonstantinBeregovoy" rel="me noopener" target="_blank">GitHub</a> ·
+          <a href="https://bereg.dev" rel="noopener" target="_blank">bereg.dev</a>
+        </p>
+        <ul>
+          <li><a href="#main">Back to top</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="license.html">License</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+        </ul>
+        <p class="site-note">Plain A11y is a working title. This site has no cookies. It counts visits with Cloudflare Web Analytics.</p>
+      </div>
+    </footer>
+  </body>
+</html>

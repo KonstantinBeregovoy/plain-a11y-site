@@ -13,6 +13,7 @@ Plain A11y is made for designers, content editors, product managers and QA peopl
 - [Home](https://a11y-ext.bereg.dev/): what the extension does, how it works, what it covers and what it does not, install steps, questions
 - [Privacy policy](https://a11y-ext.bereg.dev/privacy): the extension collects nothing and sends nothing; the three permissions (activeTab, scripting, storage) and why
 - [License](https://a11y-ext.bereg.dev/license): MIT License and third-party notices (axe-core is MPL-2.0)
+- [Changelog](https://a11y-ext.bereg.dev/changelog): what was added and changed in each version, with dates
 
 ## Source
 

@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
 // The folder that is published: nothing outside it is served.
 const ROOT = join(REPO, 'public');
-const PAGES = ['index.html', 'privacy.html', 'license.html', '404.html'];
+const PAGES = ['index.html', 'privacy.html', 'license.html', 'changelog.html', '404.html'];
 
 function load(page) {
   return new JSDOM(readFileSync(join(ROOT, page), 'utf8')).window.document;
@@ -159,6 +159,12 @@ describe('license and privacy pages', () => {
     expect(text).not.toMatch(/are not sent anywhere and\s+are not stored/);
   });
 
+  it('says on the home page that the last result of a tab is kept in memory only', () => {
+    const text = load('index.html').querySelector('#privacy')?.textContent?.replace(/\s+/g, ' ') ?? '';
+    expect(text).toContain('the last result of a tab is kept in memory only, until the page changes or the tab is closed');
+    expect(text).toContain('keeps the last result of a tab in memory until the page changes');
+  });
+
   it('gives a contact address in the privacy policy', () => {
     const mail = load('privacy.html').querySelector('a[href^="mailto:"]');
     expect(mail?.getAttribute('href')).toBe('mailto:contact@bereg.dev');
@@ -211,6 +217,61 @@ describe('site files', () => {
 });
 
 const STORE = 'https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb';
+
+describe('changelog page', () => {
+  const doc = load('changelog.html');
+  const versions = [...doc.querySelectorAll('article h2')].map((h) => ({
+    title: h.textContent.trim(),
+    // The date line is the paragraph right after the heading.
+    meta: h.nextElementSibling,
+  }));
+
+  it('lists the versions newest first, each with its number in the heading', () => {
+    const numbers = versions.map((v) => v.title.match(/^Version (\d+)\.(\d+)\.(\d+)/)?.slice(1).map(Number));
+    expect(numbers.every(Boolean), versions.map((v) => v.title).join(' | ')).toBe(true);
+    expect(numbers.length).toBeGreaterThanOrEqual(2);
+    for (let i = 1; i < numbers.length; i += 1) {
+      const [a, b] = [numbers[i - 1], numbers[i]];
+      const newer = a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
+      expect(newer, `${versions[i - 1].title} must come before ${versions[i].title}`).toBeGreaterThan(0);
+    }
+  });
+
+  it('dates every released version with a real date, and marks a version that is not released yet', () => {
+    for (const { title, meta } of versions) {
+      const time = meta?.querySelector('time');
+      if (time) {
+        const date = time.getAttribute('datetime') ?? '';
+        expect(date, title).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+        expect(new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10), title).toBe(date);
+        expect(new Date(date).getTime(), title).toBeLessThanOrEqual(Date.now());
+      } else {
+        expect(meta?.textContent, title).toMatch(/Under review in the Chrome Web Store/);
+      }
+    }
+  });
+
+  it('records the launch of the base version as 0.1.0, on 30 October 2026', () => {
+    const first = versions.at(-1);
+    expect(first.title).toBe('Version 0.1.0: launch of the base version');
+    expect(first.meta.querySelector('time')?.getAttribute('datetime')).toBe('2026-10-30');
+  });
+
+  it('groups the changes under Added, Changed and Privacy and links the privacy policy and the full list', () => {
+    const groups = [...doc.querySelectorAll('article h3')].map((h) => h.textContent.trim());
+    expect(groups.every((g) => ['Added', 'Changed', 'Privacy'].includes(g)), groups.join(', ')).toBe(true);
+    const hrefs = [...doc.querySelectorAll('article a')].map((a) => a.getAttribute('href'));
+    expect(hrefs).toContain('privacy.html');
+    expect(hrefs).toContain('https://github.com/KonstantinBeregovoy/plain-a11y/blob/main/CHANGELOG.md');
+  });
+
+  it('is linked from the navigation and the footer of every page', () => {
+    for (const page of PAGES) {
+      const links = [...load(page).querySelectorAll('nav a, footer a')].filter((a) => a.textContent.trim() === 'Changelog');
+      expect(links, page).toHaveLength(2);
+    }
+  });
+});
 
 describe('visit counting is disclosed and the policy allows only that', () => {
   it('allows only the Cloudflare Web Analytics script and reports to the site itself, on top of the strict policy', () => {
@@ -271,7 +332,12 @@ describe('install section', () => {
 });
 
 const SITE = 'https://a11y-ext.bereg.dev';
-const INDEXED = { 'index.html': '/', 'privacy.html': '/privacy', 'license.html': '/license' };
+const INDEXED = {
+  'index.html': '/',
+  'privacy.html': '/privacy',
+  'license.html': '/license',
+  'changelog.html': '/changelog',
+};
 
 describe.each(Object.entries(INDEXED))('search and sharing data of %s', (page, path) => {
   const doc = load(page);
