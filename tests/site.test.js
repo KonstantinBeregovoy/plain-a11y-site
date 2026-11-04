@@ -246,7 +246,7 @@ describe('changelog page', () => {
         expect(new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10), title).toBe(date);
         expect(new Date(date).getTime(), title).toBeLessThanOrEqual(Date.now());
       } else {
-        expect(meta?.textContent, title).toMatch(/Under review in the Chrome Web Store/);
+        expect(meta?.textContent, title).toMatch(/^\s*Under review\s*$/);
       }
     }
   });
