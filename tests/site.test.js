@@ -217,6 +217,7 @@ describe('site files', () => {
 });
 
 const STORE = 'https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb';
+const FIREFOX_STORE = 'https://addons.mozilla.org/en-US/firefox/addon/plain-a11y/';
 
 describe('changelog page', () => {
   const doc = load('changelog.html');
@@ -246,7 +247,7 @@ describe('changelog page', () => {
         expect(new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10), title).toBe(date);
         expect(new Date(date).getTime(), title).toBeLessThanOrEqual(Date.now());
       } else {
-        expect(meta?.textContent, title).toMatch(/Under review in the Chrome Web Store/);
+        expect(meta?.textContent, title).toMatch(/^\s*Under review\s*$/);
       }
     }
   });
@@ -314,6 +315,26 @@ describe('install section', () => {
     expect(hrefs.filter((href) => href === STORE).length).toBeGreaterThanOrEqual(3);
     expect(doc.querySelector('#build-from-source')?.tagName).toBe('H3');
     expect(doc.querySelector('a[href="#build-from-source"]')).not.toBeNull();
+  });
+
+  it('offers Firefox next to Chrome: a second main button, a link in the Install section, the store address for search engines and AI assistants', () => {
+    const buttons = [...doc.querySelectorAll('a.btn.primary')].map((a) => [a.getAttribute('href'), a.textContent.trim()]);
+    expect(buttons).toEqual([[STORE, 'Add to Chrome'], [FIREFOX_STORE, 'Add to Firefox']]);
+    expect([...doc.querySelectorAll('#install a')].map((a) => a.getAttribute('href'))).toContain(FIREFOX_STORE);
+    expect(readFileSync(join(ROOT, 'llms.txt'), 'utf8')).toContain(FIREFOX_STORE);
+  });
+
+  it('no longer says that Firefox is only planned, anywhere on the home page or in the structured data', () => {
+    const html = readFileSync(join(ROOT, 'index.html'), 'utf8');
+    expect(html).not.toMatch(/Firefox is planned/i);
+    const data = JSON.parse(doc.querySelector('script[type="application/ld+json"]').textContent);
+    const app = data['@graph'].find((item) => item['@type'] === 'SoftwareApplication');
+    expect(app.operatingSystem).toContain('Firefox');
+    expect(app.description).toContain('Chrome and Firefox');
+    const faq = data['@graph'].find((item) => item['@type'] === 'FAQPage');
+    const answer = faq.mainEntity.find((q) => q.name === 'Which browsers and languages?').acceptedAnswer.text;
+    expect(answer).toContain('Firefox for desktop (version 140 or newer)');
+    expect(doc.querySelector('details:last-of-type p')?.textContent).toBe(answer);
   });
 
   it('says nothing is coming soon any more', () => {
