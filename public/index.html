@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Plain A11y: accessibility in plain language | Konstantin Beregovoy</title>
-    <meta name="description" content="A free, open-source Chrome extension that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it." />
+    <meta name="description" content="A free, open-source extension for Chrome and Firefox that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it." />
     <meta name="author" content="Konstantin Beregovoy" />
     <meta name="robots" content="index, follow" />
     <meta name="color-scheme" content="dark" />
@@ -16,7 +16,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Plain A11y" />
     <meta property="og:title" content="Plain A11y: accessibility in plain language | Konstantin Beregovoy" />
-    <meta property="og:description" content="A free, open-source Chrome extension that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it." />
+    <meta property="og:description" content="A free, open-source extension for Chrome and Firefox that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it." />
     <meta property="og:url" content="https://a11y-ext.bereg.dev/" />
     <meta property="og:image" content="https://a11y-ext.bereg.dev/assets/og.png" />
     <meta property="og:image:width" content="1200" />
@@ -32,12 +32,12 @@
           "@type": "SoftwareApplication",
           "@id": "https://a11y-ext.bereg.dev/#app",
           "name": "Plain A11y",
-          "description": "A free, open-source Chrome extension that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it.",
+          "description": "A free, open-source extension for Chrome and Firefox that checks a page for accessibility problems and explains each one in plain language: what is wrong, who it affects, how to fix it and who should do it.",
           "url": "https://a11y-ext.bereg.dev/",
           "installUrl": "https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb",
           "applicationCategory": "DeveloperApplication",
-          "operatingSystem": "Chrome",
-          "browserRequirements": "Requires Google Chrome with Manifest V3 support",
+          "operatingSystem": "Chrome, Firefox",
+          "browserRequirements": "Requires Google Chrome with Manifest V3 support, or Firefox for desktop 140 or newer",
           "inLanguage": "en",
           "isAccessibleForFree": true,
           "offers": {
@@ -93,7 +93,7 @@
               "name": "Which browsers and languages?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Chrome today, Firefox is planned. The interface and the explanations are in English for now."
+                "text": "Chrome, and Firefox for desktop (version 140 or newer). The interface and the explanations are in English for now."
               }
             }
           ]
@@ -130,7 +130,7 @@
       <div class="wrap">
         <section class="block hero" aria-labelledby="hero-title">
           <div>
-            <p class="meta">Chrome extension · free · open source</p>
+            <p class="meta">Chrome and Firefox extension · free · open source</p>
             <h1 id="hero-title">Accessibility problems, explained in plain language</h1>
             <p class="lede">
               Plain A11y checks the page you have open and tells you what is wrong, who it affects, how to
@@ -139,6 +139,7 @@
             </p>
             <div class="actions">
               <a class="btn primary" href="https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb" rel="noopener" target="_blank">Add to Chrome</a>
+              <a class="btn primary" href="https://addons.mozilla.org/en-US/firefox/addon/plain-a11y/" rel="noopener" target="_blank">Add to Firefox</a>
               <span class="meta">Free · <a href="#build-from-source">or build it from source</a></span>
             </div>
           </div>
@@ -245,7 +246,7 @@
             </li>
           </ol>
           <p class="meta">
-            Under the hood: a Manifest V3 Chrome extension written in TypeScript, with a React popup, built with
+            Under the hood: a Manifest V3 extension for Chrome and Firefox written in TypeScript, with a React popup, built with
             WXT. The axe-core version is pinned to an exact number, because rules change between versions and the
             explanations depend on them.
           </p>
@@ -413,13 +414,13 @@
         <section class="block" id="install" aria-labelledby="install-title">
           <div class="block-head"><h2 id="install-title">Install</h2></div>
           <p class="lead">
-            Install Plain A11y from the <a href="https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb" rel="noopener" target="_blank">Chrome Web Store</a>. It is free and needs no account.
+            Install Plain A11y from the <a href="https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb" rel="noopener" target="_blank">Chrome Web Store</a> or from <a href="https://addons.mozilla.org/en-US/firefox/addon/plain-a11y/" rel="noopener" target="_blank">Firefox Add-ons</a>. It is free and needs no account.
           </p>
           <ol class="bullets">
-            <li>Open the <a href="https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb" rel="noopener" target="_blank">Plain A11y page in the Chrome Web Store</a> and press “Add to Chrome”.</li>
+            <li>Open the <a href="https://chromewebstore.google.com/detail/plain-a11y/cnldihaficjignkhpgodanceilllbjfb" rel="noopener" target="_blank">Plain A11y page in the Chrome Web Store</a> and press “Add to Chrome”, or the <a href="https://addons.mozilla.org/en-US/firefox/addon/plain-a11y/" rel="noopener" target="_blank">Plain A11y page on Firefox Add-ons</a> and press “Add to Firefox”. Firefox for desktop needs version 140 or newer.</li>
             <li>Open a page, click the Plain A11y icon and press “Check page”.</li>
           </ol>
-          <p>To check local files, turn on “Allow access to file URLs” in the extension settings.</p>
+          <p>In Chrome, to check local files, turn on “Allow access to file URLs” in the extension settings.</p>
 
           <h3 id="build-from-source">Build from source</h3>
           <p>
@@ -437,6 +438,11 @@ npm run build</code></pre>
             <li>Click “Load unpacked” and choose the <code>.output/chrome-mv3</code> folder.</li>
             <li>Open a page, click the Plain A11y icon and press “Check page”.</li>
           </ol>
+          <p>
+            For Firefox, run <code>npm run build:firefox</code> instead, open <code>about:debugging#/runtime/this-firefox</code>,
+            press “Load Temporary Add-on…” and choose <code>.output/firefox-mv3/manifest.json</code>. A temporary add-on is
+            removed when Firefox closes.
+          </p>
         </section>
 
         <section class="block" id="open-source" aria-labelledby="open-source-title">
@@ -486,7 +492,7 @@ npm run build</code></pre>
           </details>
           <details>
             <summary>Which browsers and languages?</summary>
-            <p>Chrome today, Firefox is planned. The interface and the explanations are in English for now.</p>
+            <p>Chrome, and Firefox for desktop (version 140 or newer). The interface and the explanations are in English for now.</p>
           </details>
         </section>
       </div>
